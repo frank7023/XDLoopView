@@ -8,7 +8,7 @@ http://blog.sina.com.cn/s/blog_14ecb54860102x6og.html
 
 #import "XDLoopView.h"
 
-@interface ViewController ()<XDLoopDelegate>
+@interface ViewController () [XDLoopDelegate>
 
 2. 创建轮播图
 
