@@ -1,6 +1,9 @@
 # XDLoopView
 一个无限滚动的轮播图  ,(需要用到SDWebImage)
 
+核心思路我已经在blog中给出：
+http://blog.sina.com.cn/s/blog_14ecb54860102x6og.html
+
 1. 导入头文件 添加代理
 
 #import "XDLoopView.h"
