@@ -106,7 +106,7 @@ Pod::Spec.new do |s|
   #
 
   # s.resource  = "timg.jpeg"
-  # s.resources = ""
+  s.resources = "SDWebImage/"
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
