@@ -100,6 +100,8 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     _loopView.backgroundColor = [UIColor lightGrayColor];
     _loopView.showsHorizontalScrollIndicator = NO;
     _loopView.showsVerticalScrollIndicator = NO;
+    
+    /**让loopview的初始状态从第二个item开始**/
     [_loopView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
     [self insertSubview:_loopView aboveSubview:_defaultBg];
     
