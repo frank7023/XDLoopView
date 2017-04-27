@@ -205,8 +205,10 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
 //开始拖拽时改为拖拽状态，计时器停止
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     _currenStatus = LOOP_LOOPDRAG;
-    [_timer invalidate];
-    _timer = nil;
+    if (_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
 }
 
 /*
