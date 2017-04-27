@@ -205,6 +205,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
 //开始拖拽时改为拖拽状态，计时器停止
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     _currenStatus = LOOP_LOOPDRAG;
+    [self mainMethod];
     [_timer invalidate];
     _timer = nil;
 }
@@ -241,11 +242,11 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
  */
 - (void)mainMethod {
     
-    if (_loopView.contentOffset.x == 0) {
+    if (_loopView.contentOffset.x <= KWIDTH/2) {
         _pageControl.currentPage = self.sourcesArray.count;
         _loopView.contentOffset = CGPointMake(KWIDTH*self.sourcesArray.count, 0);
         
-    } else if (_loopView.contentOffset.x ==(self.sourcesArray.count+1)*KWIDTH) {
+    } else if (_loopView.contentOffset.x > (self.sourcesArray.count)*KWIDTH + KWIDTH/2) {
         _pageControl.currentPage = 0;
         _loopView.contentOffset = CGPointMake(KWIDTH, 0);
         
