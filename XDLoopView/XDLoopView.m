@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
 @property (nonatomic, strong) UICollectionViewFlowLayout *loopLayout;
 @property (nonatomic, strong) UICollectionView *loopView;
 @property (nonatomic, strong) UIPageControl *pageControl;
-@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, strong) dispatch_source_t timer;
 @property (nonatomic, assign) LoopViewStatus currenStatus;
 
 @property (nonatomic, strong) SelectImageView *defaultBg;
@@ -148,28 +148,37 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
 - (void)startTimer {
     if (!_timer) {
         _duration = _duration < 1 ? 1 : _duration;
-        _timer = [NSTimer scheduledTimerWithTimeInterval:_duration
-                                                  target:self
-                                                selector:@selector(timerCall:)
-                                                userInfo:nil
-                                                 repeats:YES];
+        _timer = dispatch_source_create(&_dispatch_source_type_timer, 0, 0, dispatch_get_main_queue());
+        dispatch_source_set_timer(_timer, dispatch_time(DISPATCH_TIME_NOW, _duration*NSEC_PER_SEC), _duration*NSEC_PER_SEC, 0*NSEC_PER_SEC);
+        dispatch_source_set_event_handler(_timer, ^{
+            CGFloat currentOffsetX = _loopView.contentOffset.x;
+            
+            if (self.direction == XDLoop_Right_Left) {
+                currentOffsetX += KWIDTH;
+                
+            } else if (self.direction == XDLoop_Left_Right) {
+                currentOffsetX -= KWIDTH;
+            }
+            
+            NSIndexPath *indexPath = [_loopView indexPathForItemAtPoint:CGPointMake(currentOffsetX, 0)];
+            
+            //滚动到下一张
+            [_loopView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
+        });
+        
+        dispatch_resume(_timer);
     }
 }
 
-- (void)timerCall:(NSTimer *)timer {
-    CGFloat currentOffsetX = _loopView.contentOffset.x;
-    
-    if (self.direction == XDLoop_Right_Left) {
-        currentOffsetX += KWIDTH;
-        
-    } else if (self.direction == XDLoop_Left_Right) {
-        currentOffsetX -= KWIDTH;
+//结束计时器
+- (void)endTimer {
+    if (!_timer) {
+        return;
     }
-    
-    NSIndexPath *indexPath = [_loopView indexPathForItemAtPoint:CGPointMake(currentOffsetX, 0)];
-    
-    //滚动到下一张
-    [_loopView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
+    dispatch_source_cancel(_timer);
+    dispatch_source_set_cancel_handler(_timer, ^{
+        _timer = nil;
+    });
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -211,10 +220,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
 //开始拖拽时改为拖拽状态，计时器停止
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     _currenStatus = LOOP_LOOPDRAG;
-    if (_timer) {
-        [_timer invalidate];
-        _timer = nil;
-    }
+    [self endTimer];
 }
 
 //状态2，滚动之时
@@ -369,11 +375,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
         [_pageControl removeFromSuperview];
         _pageControl = nil;
     }
-    
-    if (_timer) {
-        [_timer invalidate];
-        _timer = nil;
-    }
+    [self endTimer];
 }
 
 @end
