@@ -290,12 +290,15 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     int currentPage = (int)((_loopView.contentOffset.x + KWIDTH/2)/KWIDTH) - 1;
     
     /*
-     注意* 一定要做 <0 和 >self.sourcesArray.count - 1(最大页码) 的判断，否则自动滚动时是没有问题的，但在拖拽着滚动到最左边或最右边时页码不会替换
-     原因：自动滚动调用时机是滚动结束后 此时条件已经满足循环处理，
+     注意* 一定要做 <0 和 >self.sourcesArray.count - 1(最大页码) 的判断，
+          否则自动滚动时是没有问题的，但在拖拽着滚动到最左边或最右边时页码不会替换
+     
+     原因：
+          自动滚动时调用该方法（mainMethod）的时机是滚动结束后 此时条件已经满 足循环处理，
           offset被限定在了 KWIDTH ~ KWIDTH*self.sourcesArray.count 之间 
           所以currentPage不会出现小于0 和大于self.sourcesArray.count - 1 的数
      
-          拖拽滚动的时机是滚动时调用，
+          拖拽滚动的时调用该方法（mainMethod）的时机是滚动进行时调用，
           这个时候offset 如果在 （0 ~ kwidth） 或 （(self.sourcesArray.count)*KWIDTH ~ (self.sourcesArray.count + 1)*KWIDTH） 之间
           这个时候还没有出发循环处理 currentPage就会出现 < 0 和 >self.sourcesArray.count - 1 的情况 ，如果没有做判断，那么这个时候页码就会出现问题
      */
