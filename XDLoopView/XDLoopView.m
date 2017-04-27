@@ -283,7 +283,10 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
         
     }
     
-    //页码显示处理，当滑动到item的一半时切换页码 （由于是从第二个位置开始，所以要想页码正确显示需要 -1（即：第2个位置页码为1，第三个位置页码为2依次类推））
+    /*
+     页码显示处理，当滑动到item的一半时切换页码 
+     由于是从第二个位置开始，所以要想页码正确显示需要 -1（即：第2个位置页码为1，第三个位置页码为2依次类推）
+    */
     int currentPage = (int)((_loopView.contentOffset.x + KWIDTH/2)/KWIDTH) - 1;
     
     /*
