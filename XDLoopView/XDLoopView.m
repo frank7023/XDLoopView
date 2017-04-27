@@ -274,16 +274,36 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
  */
 - (void)mainMethod {
     
-    if (_loopView.contentOffset.x <= KWIDTH/2) {
-        _pageControl.currentPage = self.sourcesArray.count;
+    //循环处理（核心）
+    if (_loopView.contentOffset.x <= 0) {
         _loopView.contentOffset = CGPointMake(KWIDTH*self.sourcesArray.count, 0);
         
-    } else if (_loopView.contentOffset.x > (self.sourcesArray.count)*KWIDTH + KWIDTH/2) {
-        _pageControl.currentPage = 0;
+    } else if (_loopView.contentOffset.x >= (self.sourcesArray.count + 1)*KWIDTH) {
         _loopView.contentOffset = CGPointMake(KWIDTH, 0);
         
+    }
+    
+    //页码显示处理，当滑动到item的一半时切换页码 （由于是从第二个位置开始，所以要想页码正确显示需要 -1（即：第2个位置页码为1，第三个位置页码为2依次类推））
+    int currentPage = (int)((_loopView.contentOffset.x + KWIDTH/2)/KWIDTH) - 1;
+    
+    /*
+     注意* 一定要做 <0 和 >self.sourcesArray.count + 1 的判断，否则自动滚动时是没有问题的，但在拖拽着滚动到最左边或最右边时页码不会替换
+     原因：自动滚动调用时机是滚动结束后 此时条件已经满足循环处理，
+          offset被限定在了 KWIDTH ~ KWIDTH*self.sourcesArray.count 之间 
+          所以currentPage不会出现小于0 和大于self.sourcesArray.count + 1 的数
+     
+          拖拽滚动的时机是滚动时调用，
+          这个时候offset 如果在 （0 ~ kwidth） 或 （(self.sourcesArray.count)*KWIDTH ~ (self.sourcesArray.count + 1)*KWIDTH） 之间
+          这个时候还没有出发循环处理 currentPage就会出现 < 0 和 >self.sourcesArray.count + 1 的情况 ，如果没有做判断，那么这个时候页码就会出现问题
+     */
+    if (currentPage < 0) {
+        _pageControl.currentPage = self.sourcesArray.count;
+        
+    } else if (currentPage > self.sourcesArray.count + 1) {
+        _pageControl.currentPage = 0;
+        
     } else {
-        _pageControl.currentPage = (int)(_loopView.contentOffset.x/KWIDTH) - 1;
+        _pageControl.currentPage = currentPage;
     }
 }
 
