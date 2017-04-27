@@ -205,13 +205,23 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
 //开始拖拽时改为拖拽状态，计时器停止
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     _currenStatus = LOOP_LOOPDRAG;
-    [self mainMethod];
     [_timer invalidate];
     _timer = nil;
 }
 
 /*
- 如果是在拖拽状态时 减速结束后调用，并重新开启计时器
+ 如果是在拖拽状态时 开始减速时调用
+ 实测只有在手动拉动时才会调用该方法（scrollToItemAtIndexPath方法不会触发此代理）
+ 保险起见需要加一层判断
+ */
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    if (_currenStatus == LOOP_LOOPDRAG) {
+        [self mainMethod];
+    }
+}
+
+/*
+ 如果是在拖拽状态时 减速结束后调用，此时把状态设置为自动 并开启计时器
  实测只有在手动拉动时才会调用该方法（scrollToItemAtIndexPath方法不会触发此代理）
  保险起见需要加一层判断
  */
