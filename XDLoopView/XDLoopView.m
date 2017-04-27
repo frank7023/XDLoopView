@@ -212,6 +212,17 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
 }
 
 /*
+ 如果是在拖拽状态时 滚动
+ 实测只有在手动拉动时才会调用该方法（scrollToItemAtIndexPath方法不会触发此代理）
+ 保险起见需要加一层判断
+ */
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (_currenStatus == LOOP_LOOPDRAG) {
+        [self mainMethod];
+    }
+}
+
+/*
  如果是在拖拽状态时 开始减速时调用
  实测只有在手动拉动时才会调用该方法（scrollToItemAtIndexPath方法不会触发此代理）
  保险起见需要加一层判断
