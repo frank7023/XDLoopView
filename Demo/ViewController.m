@@ -34,7 +34,9 @@
                 @"http://img.taopic.com/uploads/allimg/130711/318756-130G1222R317.jpg",
                 @"test2.jpeg",
                 @"test1.jpeg",
-                @"http://www.taopic.com/uploads/allimg/120421/107063-12042114025737.jpg"];
+                @"http://www.taopic.com/uploads/allimg/120421/107063-12042114025737.jpg",
+                @"test2.jpeg",
+                @"test1.jpeg"];
     [self XDLoopUI];
 }
 
