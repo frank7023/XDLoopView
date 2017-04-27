@@ -202,6 +202,12 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     }
 }
 
+
+/*
+    拖拽状态下的 四 种状态 要考虑全面
+ */
+
+//状态1，开始滚动之前
 //开始拖拽时改为拖拽状态，计时器停止
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     _currenStatus = LOOP_LOOPDRAG;
@@ -211,6 +217,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     }
 }
 
+//状态2，滚动之时
 /*
  如果是在拖拽状态时 滚动
  实测只有在手动拉动时才会调用该方法（scrollToItemAtIndexPath方法不会触发此代理）
@@ -222,6 +229,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     }
 }
 
+//状态3，将要结束滚动之前
 /*
  如果是在拖拽状态时 开始减速时调用
  实测只有在手动拉动时才会调用该方法（scrollToItemAtIndexPath方法不会触发此代理）
@@ -233,6 +241,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     }
 }
 
+//状态4，结束滚动
 /*
  如果是在拖拽状态时 减速结束后调用，此时把状态设置为自动 并开启计时器
  实测只有在手动拉动时才会调用该方法（scrollToItemAtIndexPath方法不会触发此代理）
