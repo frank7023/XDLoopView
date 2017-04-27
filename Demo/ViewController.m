@@ -47,7 +47,7 @@
     _loop = [[XDLoopView alloc]initWithFrame:CGRectMake(0,100,KWIDTH,KITEMHEIGHT)
                                bySourceArray:_source
                                     duration:4
-                              defaultBgImage:nil];
+                              defaultBgImage:@"defaultGg.jpeg"];
     _loop.delegate = self;
     _loop.pageControlHidden = NO;
     _loop.direction = XDLoop_Right_Left;
@@ -62,10 +62,11 @@
     
     //2.
     /****************************从左边 ——> 右边滚动********************************/
+    _source = @[];
     _loop2 = [[XDLoopView alloc]initWithFrame:CGRectMake(0, 100+KITEMHEIGHT + 50, KWIDTH, KITEMHEIGHT)
                                 bySourceArray:_source
                                      duration:4
-                               defaultBgImage:nil];
+                               defaultBgImage:@"defaultGg.jpeg"];
     _loop2.delegate = self;
     _loop2.direction = XDLoop_Left_Right;
     [self.view addSubview:_loop2];
@@ -88,6 +89,12 @@
 - (void)XDLoopViewErrorSelectedinLoopView:(XDLoopView *)loopView {
     //如果轮播图加载失败，在这个方法里进行重新加载
     NSLog(@"当传入的数组为空数组时 的 默认图片的点击事件");
+    if (loopView == _loop2) {
+        _source = @[@"http://scimg.jb51.net/allimg/160815/103-160Q509544OC.jpg",
+                    @"http://img.taopic.com/uploads/allimg/130711/318756-130G1222R317.jpg",
+                    @"http://www.taopic.com/uploads/allimg/120421/107063-12042114025737.jpg"];
+        [_loop2 XDLoopRefreshWithSourceArray:_source];
+    }
 }
 
 @end

@@ -15,8 +15,8 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     LOOP_LOOPDRAG
 };
 
-#define KWIDTH self.bounds.size.width
-#define KITEMHEIGHT self.bounds.size.height
+#define LOOPWIDTH self.bounds.size.width
+#define LOOPHEIGHT self.bounds.size.height
 
 #define DURATION 5  //滚动间隔时间
 
@@ -89,7 +89,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     _loopLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     _loopLayout.minimumLineSpacing = 0; //设置每一行的间距
     _loopLayout.minimumInteritemSpacing = 0;
-    _loopLayout.itemSize=CGSizeMake(KWIDTH, KITEMHEIGHT);  //设置每个单元格的大小
+    _loopLayout.itemSize=CGSizeMake(LOOPWIDTH, LOOPHEIGHT);  //设置每个单元格的大小
     _loopLayout.sectionInset=UIEdgeInsetsMake(0, 0, 0, 0);
     
     _loopView = [[UICollectionView alloc]initWithFrame:self.bounds collectionViewLayout:_loopLayout];
@@ -128,8 +128,8 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     if (!_pageControl) {
         _pageControl = [[UIPageControl alloc] initWithFrame:
                         CGRectMake(0,
-                                   KITEMHEIGHT - 50,
-                                   KWIDTH,
+                                   LOOPHEIGHT - 50,
+                                   LOOPWIDTH,
                                    50)];
     }
     
@@ -154,10 +154,10 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
             CGFloat currentOffsetX = _loopView.contentOffset.x;
             
             if (self.direction == XDLoop_Right_Left) {
-                currentOffsetX += KWIDTH;
+                currentOffsetX += LOOPWIDTH;
                 
             } else if (self.direction == XDLoop_Left_Right) {
-                currentOffsetX -= KWIDTH;
+                currentOffsetX -= LOOPWIDTH;
             }
             
             NSIndexPath *indexPath = [_loopView indexPathForItemAtPoint:CGPointMake(currentOffsetX, 0)];
@@ -282,10 +282,10 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     
     //循环处理（核心）
     if (_loopView.contentOffset.x <= 0) {
-        _loopView.contentOffset = CGPointMake(KWIDTH*self.sourcesArray.count, 0);
+        _loopView.contentOffset = CGPointMake(LOOPWIDTH*self.sourcesArray.count, 0);
         
-    } else if (_loopView.contentOffset.x >= (self.sourcesArray.count + 1)*KWIDTH) {
-        _loopView.contentOffset = CGPointMake(KWIDTH, 0);
+    } else if (_loopView.contentOffset.x >= (self.sourcesArray.count + 1)*LOOPWIDTH) {
+        _loopView.contentOffset = CGPointMake(LOOPWIDTH, 0);
         
     }
     
@@ -293,7 +293,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
      页码显示处理，当滑动到item的一半时切换页码 
      由于是从第二个位置开始，所以要想页码正确显示需要 -1（即：第2个位置页码为1，第三个位置页码为2依次类推）
     */
-    int currentPage = (int)((_loopView.contentOffset.x + KWIDTH/2)/KWIDTH) - 1;
+    int currentPage = (int)((_loopView.contentOffset.x + LOOPWIDTH/2)/LOOPWIDTH) - 1;
     
     /*
      注意* 一定要做 <0 和 >self.sourcesArray.count - 1(最大页码) 的判断，
@@ -301,11 +301,11 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
      
      原因：
           自动滚动时调用该方法（mainMethod）的时机是滚动结束后 此时条件已经满 足循环处理，
-          offset被限定在了 KWIDTH ~ KWIDTH*self.sourcesArray.count 之间 
+          offset被限定在了 LOOPWIDTH ~ LOOPWIDTH*self.sourcesArray.count 之间 
           所以currentPage不会出现小于0 和大于self.sourcesArray.count - 1 的数
      
           拖拽滚动的时调用该方法（mainMethod）的时机是滚动进行时调用，
-          这个时候offset 如果在 （0 ~ kwidth） 或 （(self.sourcesArray.count)*KWIDTH ~ (self.sourcesArray.count + 1)*KWIDTH） 之间
+          这个时候offset 如果在 （0 ~ LOOPWIDTH） 或 （(self.sourcesArray.count)*LOOPWIDTH ~ (self.sourcesArray.count + 1)*LOOPWIDTH） 之间
           这个时候还没有出发循环处理 currentPage就会出现 < 0 和 >self.sourcesArray.count - 1 的情况 ，如果没有做判断，那么这个时候页码就会出现问题
      */
     if (currentPage < 0) {

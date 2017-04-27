@@ -10,9 +10,6 @@
 #import "SelectImageView.h"
 #import "UIImageView+WebCache.h"
 
-#define KWIDTH [[UIScreen mainScreen] bounds].size.width
-#define KITEMHEIGHT 200
-
 @interface XDLoopCell ()
 @property (nonatomic, strong) SelectImageView *itemView;
 @end
