@@ -25,7 +25,7 @@
 
 - (void)creatMainUI {
     _itemView = [[SelectImageView alloc]initWithFrame:self.bounds];
-    _itemView.backgroundColor = [UIColor whiteColor];
+    _itemView.backgroundColor = [UIColor lightGrayColor];
     [self.contentView addSubview:_itemView];
 }
 

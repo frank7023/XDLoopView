@@ -47,7 +47,7 @@
     _loop = [[XDLoopView alloc]initWithFrame:CGRectMake(0,100,KWIDTH,KITEMHEIGHT)
                                bySourceArray:_source
                                     duration:4
-                              defaultBgImage:@"defaultGg.jpeg"];
+                              defaultBgImage:@"defaultGg.png"];
     _loop.delegate = self;
     _loop.pageControlHidden = NO;
     _loop.direction = XDLoop_Right_Left;
@@ -66,7 +66,7 @@
     _loop2 = [[XDLoopView alloc]initWithFrame:CGRectMake(0, 100+KITEMHEIGHT + 50, KWIDTH, KITEMHEIGHT)
                                 bySourceArray:_source
                                      duration:4
-                               defaultBgImage:@"defaultGg.jpeg"];
+                               defaultBgImage:@"defaultGg.png"];
     _loop2.delegate = self;
     _loop2.direction = XDLoop_Left_Right;
     [self.view addSubview:_loop2];

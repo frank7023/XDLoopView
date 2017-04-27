@@ -35,7 +35,7 @@
 		8E24FDDE1EB0981900DE78F4 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E24FDCE1EB0981900DE78F4 /* UIImageView+HighlightedWebCache.m */; };
 		8E24FDDF1EB0981900DE78F4 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E24FDD01EB0981900DE78F4 /* UIImageView+WebCache.m */; };
 		8E24FDE01EB0981900DE78F4 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E24FDD21EB0981900DE78F4 /* UIView+WebCacheOperation.m */; };
-		8E945A8D1EB1B41D00E3E4DE /* defaultGg.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 8E945A8C1EB1B41D00E3E4DE /* defaultGg.jpeg */; };
+		8E945A931EB1B6AC00E3E4DE /* defaultGg.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E945A921EB1B6AC00E3E4DE /* defaultGg.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,7 +110,7 @@
 		8E24FDD01EB0981900DE78F4 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+WebCache.m"; path = "SDWebImage/UIImageView+WebCache.m"; sourceTree = SOURCE_ROOT; };
 		8E24FDD11EB0981900DE78F4 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+WebCacheOperation.h"; path = "SDWebImage/UIView+WebCacheOperation.h"; sourceTree = SOURCE_ROOT; };
 		8E24FDD21EB0981900DE78F4 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+WebCacheOperation.m"; path = "SDWebImage/UIView+WebCacheOperation.m"; sourceTree = SOURCE_ROOT; };
-		8E945A8C1EB1B41D00E3E4DE /* defaultGg.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = defaultGg.jpeg; path = Resource/defaultGg.jpeg; sourceTree = SOURCE_ROOT; };
+		8E945A921EB1B6AC00E3E4DE /* defaultGg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = defaultGg.png; path = Resource/defaultGg.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,7 +255,7 @@
 		8E24FD831EB0895400DE78F4 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				8E945A8C1EB1B41D00E3E4DE /* defaultGg.jpeg */,
+				8E945A921EB1B6AC00E3E4DE /* defaultGg.png */,
 				8E24FD841EB0897C00DE78F4 /* test.jpeg */,
 				8E24FD851EB0897C00DE78F4 /* test1.jpeg */,
 				8E24FD861EB0897C00DE78F4 /* test2.jpeg */,
@@ -376,8 +376,8 @@
 				8E24FD2A1EB0874800DE78F4 /* LaunchScreen.storyboard in Resources */,
 				8E24FD871EB0897C00DE78F4 /* test.jpeg in Resources */,
 				8E24FD271EB0874800DE78F4 /* Assets.xcassets in Resources */,
+				8E945A931EB1B6AC00E3E4DE /* defaultGg.png in Resources */,
 				8E24FD881EB0897C00DE78F4 /* test1.jpeg in Resources */,
-				8E945A8D1EB1B41D00E3E4DE /* defaultGg.jpeg in Resources */,
 				8E24FD251EB0874800DE78F4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
