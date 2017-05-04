@@ -131,10 +131,10 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
                                    LOOPHEIGHT - 50,
                                    LOOPWIDTH,
                                    50)];
+        _pageControl.currentPage = 0;
     }
     
     _pageControl.numberOfPages = sources.count;
-    _pageControl.currentPage = 0;
     _pageControl.userInteractionEnabled = NO;
     _pageControl.hidden = self.pageControlHidden;
     [self insertSubview:_pageControl aboveSubview:_loopView];
@@ -359,10 +359,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     
     //把刷新资源数组 赋值 给资源数组
     _sourcesArray = [NSArray arrayWithArray:sources];
-    
-    //每次更新资源后让轮播图恢复最初状态
-    [_loopView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-    
+        
     //开始刷新
     [_loopView reloadData];
 }
