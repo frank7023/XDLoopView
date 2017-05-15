@@ -35,9 +35,28 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
 
 @implementation XDLoopView
 
+- (void)setPageControlHidden:(BOOL)pageControlHidden {
+    _pageControlHidden = pageControlHidden;
+    
+    if (_pageControlHidden && _pageControl) {
+        self.pageControl.hidden = YES;
+        [self.pageControl removeFromSuperview];
+        self.pageControl = nil;
+    }
+}
+
+- (void)setIsAutoRolling:(BOOL)isAutoRolling {
+    _isAutoRolling = isAutoRolling;
+    if (_timer&&!_isAutoRolling) {
+        [self endTimer];
+    }
+}
+
 - (instancetype)initWithFrame:(CGRect)frame bySourceArray:(NSArray *)sources duration:(CGFloat)duration defaultBgImage:(NSString *)imageName{
     self = [super initWithFrame:frame];
     if (self) {
+        _isAutoRolling = YES;
+        _pageControlHidden = NO;
         [self creatDefaultBGWithSource:sources duration:(CGFloat)duration andDefaultImage:imageName];
     }
     
@@ -125,7 +144,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
  @param sources 资源数组
  */
 - (void)creatPageControllWithSource:(NSArray *)sources {
-    if (!_pageControl) {
+    if (!_pageControl&&!_pageControlHidden) {
         _pageControl = [[UIPageControl alloc] initWithFrame:
                         CGRectMake(0,
                                    LOOPHEIGHT - 50,
@@ -146,7 +165,8 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
  创建并开启计时器
  */
 - (void)startTimer {
-    if (!_timer) {
+    
+    if (!_timer && _isAutoRolling) {
         _duration = _duration < 1 ? 1 : _duration;
         _timer = dispatch_source_create(&_dispatch_source_type_timer, 0, 0, dispatch_get_main_queue());
         dispatch_source_set_timer(_timer, dispatch_time(DISPATCH_TIME_NOW, _duration*NSEC_PER_SEC), _duration*NSEC_PER_SEC, 0*NSEC_PER_SEC);

@@ -50,6 +50,7 @@
                               defaultBgImage:@"defaultGg.png"];
     _loop.delegate = self;
     _loop.pageControlHidden = NO;
+    _loop.isAutoRolling = YES;
     _loop.direction = XDLoop_Right_Left;
     [self.view addSubview:_loop];
     /*
@@ -69,6 +70,7 @@
                                defaultBgImage:@"defaultGg.png"];
     _loop2.delegate = self;
     _loop2.direction = XDLoop_Left_Right;
+    _loop2.isAutoRolling = NO;
     [self.view addSubview:_loop2];
     /*
      如果开始时没有数据，可以在数据请求完毕时调用下面的方法，刷新轮播图

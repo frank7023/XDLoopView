@@ -38,6 +38,8 @@ typedef NS_ENUM(NSInteger, XDLoopScrollDirection) {
 @property (nonatomic, strong) NSArray *sourcesArray;
 //滚动方向
 @property (nonatomic, assign) XDLoopScrollDirection direction;
+//是否自动滚动
+@property (nonatomic, assign) BOOL isAutoRolling;
 
 /**
  轮播图
