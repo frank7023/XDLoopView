@@ -20,9 +20,9 @@ typedef NS_ENUM(NSInteger, XDLoopScrollDirection) {
 /**
  点击轮播图片是的相应
 
- @param index 所点击的图片的index
+ @param item 所点击的图片的index
  */
-- (void)XDLoopViewDidSelectedAtIndex:(NSInteger)index inLoopView:(XDLoopView *)loopView;
+- (void)XDLoopViewDidSelectedAtItem:(NSInteger)item inLoopView:(XDLoopView *)loopView;
 
 /**
  当加载失败或没有资源时 默认背景图片的点击事件

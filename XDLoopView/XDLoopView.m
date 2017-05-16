@@ -216,18 +216,18 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     } else {
         source = _sourcesArray[indexPath.row - 1];
     }
-    [cell configCellWithSource:source atIndex:indexPath.row];
+    [cell configCellWithSource:source atItem:indexPath.row];
     return cell;
 }
 
 /**
  xdloopcell 的代理
 
- @param index 所点击的item的索引
+ @param item 所点击的item的索引
  */
-- (void)xdLoopViewdidSelectedAtIndex:(NSInteger)index {
-    if ([self.delegate respondsToSelector:@selector(XDLoopViewDidSelectedAtIndex:inLoopView:)]) {
-        [self.delegate XDLoopViewDidSelectedAtIndex:index - 1 inLoopView:self];
+- (void)xdLoopViewdidSelectedAtItem:(NSInteger)item {
+    if ([self.delegate respondsToSelector:@selector(XDLoopViewDidSelectedAtItem:inLoopView:)]) {
+        [self.delegate XDLoopViewDidSelectedAtItem:item - 1 inLoopView:self];
     }
 }
 

@@ -10,12 +10,12 @@
 
 @protocol XDLoopCellDelegate <NSObject>
 
-- (void)xdLoopViewdidSelectedAtIndex:(NSInteger)index;
+- (void)xdLoopViewdidSelectedAtItem:(NSInteger)item;
 
 @end
 
 @interface XDLoopCell : UICollectionViewCell
 @property (nonatomic, weak) id <XDLoopCellDelegate> delegate;
 
-- (void)configCellWithSource:(NSString *)source atIndex:(NSInteger)idex;
+- (void)configCellWithSource:(NSString *)source atItem:(NSInteger)item;
 @end

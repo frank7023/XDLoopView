@@ -81,11 +81,11 @@
 }
 
 #pragma mark -- XDLoopViewDelegate
-- (void)XDLoopViewDidSelectedAtIndex:(NSInteger)index inLoopView:(XDLoopView *)loopView {
+- (void)XDLoopViewDidSelectedAtItem:(NSInteger)item inLoopView:(XDLoopView *)loopView {
     if (loopView == _loop2) {
         NSLog(@"loop2");
     }
-    NSLog(@"点击了第：%ld 张图片",(long)index);
+    NSLog(@"点击了第：%ld 张图片",(long)item);
 }
 
 - (void)XDLoopViewErrorSelectedinLoopView:(XDLoopView *)loopView {

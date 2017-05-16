@@ -29,7 +29,7 @@
     [self.contentView addSubview:_itemView];
 }
 
-- (void)configCellWithSource:(NSString *)source atIndex:(NSInteger)idex {
+- (void)configCellWithSource:(NSString *)source atItem:(NSInteger)item {
     [_itemView sd_setImageWithURL:[NSURL URLWithString:source] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (error) {
             _itemView.image = [UIImage imageNamed:source];
@@ -38,7 +38,7 @@
     
     
     [_itemView tapGestureBlock:^(id obj) {
-        [self.delegate xdLoopViewdidSelectedAtIndex:idex];
+        [self.delegate xdLoopViewdidSelectedAtItem:item];
     }];
 }
 @end
