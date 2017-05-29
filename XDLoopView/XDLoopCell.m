@@ -36,7 +36,6 @@
         }
     }];
     
-    
     [_itemView tapGestureBlock:^(id obj) {
         [self.delegate xdLoopViewdidSelectedAtItem:item];
     }];
