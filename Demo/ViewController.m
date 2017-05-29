@@ -28,7 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
     self.view.backgroundColor = [UIColor whiteColor];
     _source = @[@"http://scimg.jb51.net/allimg/160815/103-160Q509544OC.jpg",
                 @"http://img.taopic.com/uploads/allimg/130711/318756-130G1222R317.jpg",
