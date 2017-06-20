@@ -24,8 +24,20 @@
 }
 
 - (void)creatMainUI {
+    //实现模糊效果
+    UIBlurEffect *blurEffrct =[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    
+    //毛玻璃视图
+    UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc]initWithEffect:blurEffrct];
+    
+    visualEffectView.frame = self.bounds;
+    
+    visualEffectView.alpha = 0.9;
+    
+    [self.contentView addSubview:visualEffectView];
     _itemView = [[SelectImageView alloc]initWithFrame:self.bounds];
     _itemView.backgroundColor = [UIColor lightGrayColor];
+    _itemView.contentMode = UIViewContentModeScaleAspectFit;
     [self.contentView addSubview:_itemView];
 }
 
@@ -34,6 +46,7 @@
         if (error) {
             _itemView.image = [UIImage imageNamed:source];
         }
+        self.contentView.backgroundColor = [UIColor colorWithPatternImage:_itemView.image];
     }];
     
     [_itemView tapGestureBlock:^(id obj) {
