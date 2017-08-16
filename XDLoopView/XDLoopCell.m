@@ -12,6 +12,7 @@
 
 @interface XDLoopCell ()
 @property (nonatomic, strong) SelectImageView *itemView;
+
 @end
 
 @implementation XDLoopCell
@@ -19,11 +20,13 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self creatMainUI];
+        self.contentView.backgroundColor = [UIColor blackColor];
     }
     return self;
 }
 
 - (void)creatMainUI {
+    
     //实现模糊效果
     UIBlurEffect *blurEffrct =[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     
@@ -35,13 +38,15 @@
     visualEffectView.alpha = 0.9;
     
     [self.contentView addSubview:visualEffectView];
+    
     _itemView = [[SelectImageView alloc]initWithFrame:self.bounds];
-    _itemView.backgroundColor = [UIColor lightGrayColor];
+    _itemView.backgroundColor = [UIColor clearColor];
     _itemView.contentMode = UIViewContentModeScaleAspectFit;
     [self.contentView addSubview:_itemView];
 }
 
 - (void)configCellWithSource:(NSString *)source atItem:(NSInteger)item {
+    
     [_itemView sd_setImageWithURL:[NSURL URLWithString:source] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (error) {
             _itemView.image = [UIImage imageNamed:source];
