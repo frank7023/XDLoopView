@@ -233,7 +233,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
 
 
 /*
-    拖拽状态下的 四 种状态 要考虑全面
+ 拖拽状态下的 五 种状态 要考虑全面
  */
 
 //状态1，开始滚动之前
@@ -245,9 +245,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
 
 //状态2，滚动之时
 /*
- 如果是在拖拽状态时 滚动
- 实测只有在手动拉动时才会调用该方法（scrollToItemAtIndexPath方法不会触发此代理）
- 保险起见需要加一层判断
+ 只要滚动就会调用改代理，为了避免重复计算，我们只在手动拖动时去计算每一个位置
  */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (_currenStatus == LOOP_LOOPDRAG) {
@@ -255,40 +253,40 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     }
 }
 
-//状态3，将要结束滚动之前
+//状态3，将要滚动减速之前
 /*
  如果是在拖拽状态时 开始减速时调用
  实测只有在手动拉动时才会调用该方法（scrollToItemAtIndexPath方法不会触发此代理）
- 保险起见需要加一层判断
  */
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-    if (_currenStatus == LOOP_LOOPDRAG) {
-        [self mainMethod];
-    }
+    [self mainMethod];
 }
 
-//状态4，结束滚动
+//状态4，滚动减速为0
 /*
- 如果是在拖拽状态时 减速结束后调用，此时把状态设置为自动 并开启计时器
+ 如果是在拖拽状态时 减速结束后调用
  实测只有在手动拉动时才会调用该方法（scrollToItemAtIndexPath方法不会触发此代理）
- 保险起见需要加一层判断
  */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    if (_currenStatus == LOOP_LOOPDRAG) {
-        _currenStatus = LOOP_LOOPAUTO;
-        [self mainMethod];
-        [self startTimer];
-    }
+    [self mainMethod];
 }
+
+//状态5，拖动结束
+/*
+ 当拖拽技术时调用，此时状态改为自定模式，并开启计时器
+ */
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    _currenStatus = LOOP_LOOPAUTO;
+    [self startTimer];
+}
+
 
 /*
  结束滚动时调用，由scrollToItemAtIndexPath方法触发
- 实测手动拉动时不会触发该方法，保险起见需要加一层判断
+ 实测手动拉动时不会触发该方法
  */
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    if (_currenStatus == LOOP_LOOPAUTO) {
-        [self mainMethod];
-    }
+    [self mainMethod];
 }
 
 /**
