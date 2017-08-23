@@ -367,8 +367,6 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
         //只有一张资源时 不需要页码 和 计时器 也不需要滚动
     } else if (sources.count == 1) {
         [self noPageAndTimerHandle];
-        /**让loopview的初始状态从第二个item开始**/
-        [_loopView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
         _loopView.scrollEnabled = NO;
         
         //资源多于一张时 需要显示 页码 和 计时器 并且需要能够滚动
@@ -382,6 +380,9 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
         
     //开始刷新
     [_loopView reloadData];
+    
+    //更正当前index
+    [self mainMethod];
 }
 
 /**
