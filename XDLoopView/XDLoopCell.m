@@ -46,16 +46,16 @@
 }
 
 - (void)configCellWithSource:(NSString *)source atItem:(NSInteger)item {
-    
+    __weak typeof(self) weakSelf = self;
     [_itemView sd_setImageWithURL:[NSURL URLWithString:source] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (error) {
-            _itemView.image = [UIImage imageNamed:source];
+            weakSelf.itemView.image = [UIImage imageNamed:source];
         }
-        self.contentView.backgroundColor = [UIColor colorWithPatternImage:_itemView.image];
+        weakSelf.contentView.backgroundColor = [UIColor colorWithPatternImage:weakSelf.itemView.image];
     }];
     
     [_itemView tapGestureBlock:^(id obj) {
-        [self.delegate xdLoopViewdidSelectedAtItem:item];
+        [weakSelf.delegate xdLoopViewdidSelectedAtItem:item];
     }];
 }
 @end

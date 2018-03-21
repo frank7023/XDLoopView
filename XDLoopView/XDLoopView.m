@@ -72,6 +72,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     if (_defaultBg) {
         return;
     }
+    __weak typeof(self) weakSelf = self;
     _duration = duration;
     _defaultBg = [[SelectImageView alloc]initWithFrame:self.bounds];
     _defaultBg.backgroundColor = [UIColor lightGrayColor];
@@ -79,8 +80,8 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     _defaultBg.hidden = sources.count > 0;
     [self addSubview:_defaultBg];
     [_defaultBg tapGestureBlock:^(id obj) {
-        if ([self.delegate respondsToSelector:@selector(XDLoopViewErrorSelectedinLoopView:)]) {
-            [self.delegate XDLoopViewErrorSelectedinLoopView:self];
+        if ([weakSelf.delegate respondsToSelector:@selector(XDLoopViewErrorSelectedinLoopView:)]) {
+            [weakSelf.delegate XDLoopViewErrorSelectedinLoopView:self];
         }
     }];
     
@@ -165,25 +166,26 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
  创建并开启计时器
  */
 - (void)startTimer {
-    
+    __weak typeof(self) weakSelf = self;
     if (!_timer && _isAutoRolling) {
         _duration = _duration < 1 ? 1 : _duration;
         _timer = dispatch_source_create(&_dispatch_source_type_timer, 0, 0, dispatch_get_main_queue());
         dispatch_source_set_timer(_timer, dispatch_time(DISPATCH_TIME_NOW, _duration*NSEC_PER_SEC), _duration*NSEC_PER_SEC, 0*NSEC_PER_SEC);
+        
         dispatch_source_set_event_handler(_timer, ^{
-            CGFloat currentOffsetX = _loopView.contentOffset.x;
+            CGFloat currentOffsetX = weakSelf.loopView.contentOffset.x;
             
-            if (self.direction == XDLoop_Right_Left) {
+            if (weakSelf.direction == XDLoop_Right_Left) {
                 currentOffsetX += LOOPWIDTH;
                 
-            } else if (self.direction == XDLoop_Left_Right) {
+            } else if (weakSelf.direction == XDLoop_Left_Right) {
                 currentOffsetX -= LOOPWIDTH;
             }
             
-            NSIndexPath *indexPath = [_loopView indexPathForItemAtPoint:CGPointMake(currentOffsetX, 0)];
+            NSIndexPath *indexPath = [weakSelf.loopView indexPathForItemAtPoint:CGPointMake(currentOffsetX, 0)];
             
             //滚动到下一张
-            [_loopView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
+            [weakSelf.loopView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
         });
         
         dispatch_resume(_timer);
@@ -196,8 +198,9 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
         return;
     }
     dispatch_source_cancel(_timer);
+    __weak typeof(self) weakSelf = self;
     dispatch_source_set_cancel_handler(_timer, ^{
-        _timer = nil;
+        weakSelf.timer = nil;
     });
 }
 
