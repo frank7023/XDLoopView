@@ -58,4 +58,9 @@ typedef NS_ENUM(NSInteger, XDLoopScrollDirection) {
  @param sources 新的轮播图资源数组
  */
 - (void)XDLoopRefreshWithSourceArray:(NSArray *)sources;
+
+/**
+ 停止计时器  该方法在需要在控制器dealloc中调用，否则计时器会强引用控制器的view，造成view不释放
+ */
+- (void)endTimer;
 @end

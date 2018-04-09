@@ -57,7 +57,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     if (self) {
         _isAutoRolling = YES;
         _pageControlHidden = NO;
-        [self creatDefaultBGWithSource:sources duration:(CGFloat)duration andDefaultImage:imageName];
+        [self creatDefaultBGWithSource:sources duration:duration andDefaultImage:imageName];
     }
     
     return self;
@@ -80,8 +80,9 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     _defaultBg.hidden = sources.count > 0;
     [self addSubview:_defaultBg];
     [_defaultBg tapGestureBlock:^(id obj) {
-        if ([weakSelf.delegate respondsToSelector:@selector(XDLoopViewErrorSelectedinLoopView:)]) {
-            [weakSelf.delegate XDLoopViewErrorSelectedinLoopView:self];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if ([strongSelf.delegate respondsToSelector:@selector(XDLoopViewErrorSelectedinLoopView:)]) {
+            [strongSelf.delegate XDLoopViewErrorSelectedinLoopView:strongSelf];
         }
     }];
     
@@ -198,10 +199,6 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
         return;
     }
     dispatch_source_cancel(_timer);
-    __weak typeof(self) weakSelf = self;
-    dispatch_source_set_cancel_handler(_timer, ^{
-        weakSelf.timer = nil;
-    });
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -346,6 +343,9 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
  @param sources 轮播图新资源数组
  */
 - (void)XDLoopRefreshWithSourceArray:(NSArray *)sources {
+    if (sources.count == 0) {
+        return;
+    }
     /**根据资源有无决定是否显示默认背景**/
     _defaultBg.hidden = sources.count > 0;
     
