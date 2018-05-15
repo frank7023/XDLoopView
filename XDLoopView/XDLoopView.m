@@ -199,6 +199,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
         return;
     }
     dispatch_source_cancel(_timer);
+    _timer = nil;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
