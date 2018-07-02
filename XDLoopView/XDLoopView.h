@@ -34,8 +34,6 @@ typedef NS_ENUM(NSInteger, XDLoopScrollDirection) {
 @property (nonatomic, weak) id<XDLoopDelegate> delegate;
 //隐藏 页码
 @property (nonatomic, assign) BOOL pageControlHidden;
-//数组资源
-@property (nonatomic, strong) NSArray *sourcesArray;
 //滚动方向
 @property (nonatomic, assign) XDLoopScrollDirection direction;
 //是否自动滚动

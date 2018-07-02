@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) dispatch_source_t timer;
 @property (nonatomic, assign) LoopViewStatus currenStatus;
-
+@property (nonatomic, strong) NSArray *sourcesArray;
 @property (nonatomic, strong) SelectImageView *defaultBg;
 
 @end
@@ -37,18 +37,16 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
 
 - (void)setPageControlHidden:(BOOL)pageControlHidden {
     _pageControlHidden = pageControlHidden;
-    
-    if (_pageControlHidden && _pageControl) {
-        self.pageControl.hidden = YES;
-        [self.pageControl removeFromSuperview];
-        self.pageControl = nil;
-    }
+    self.pageControl.hidden = pageControlHidden;
 }
 
 - (void)setIsAutoRolling:(BOOL)isAutoRolling {
     _isAutoRolling = isAutoRolling;
     if (_timer&&!_isAutoRolling) {
         [self endTimer];
+    } else {
+        [self endTimer];
+        [self startTimer];
     }
 }
 
@@ -57,6 +55,7 @@ typedef NS_ENUM(NSInteger, LoopViewStatus) {
     if (self) {
         _isAutoRolling = YES;
         _pageControlHidden = NO;
+        _direction = XDLoop_Right_Left;
         [self creatDefaultBGWithSource:sources duration:duration andDefaultImage:imageName];
     }
     
